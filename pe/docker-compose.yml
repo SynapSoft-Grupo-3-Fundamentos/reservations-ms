@@ -20,8 +20,8 @@ services:
       container_name: reservation-db
       environment:
         POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: 12345678
-        POSTGRES_DB: reservation_db
+        POSTGRES_PASSWORD: admin123
+        POSTGRES_DB: reservation-db
       ports:
         - "5432:5432"
       restart:
