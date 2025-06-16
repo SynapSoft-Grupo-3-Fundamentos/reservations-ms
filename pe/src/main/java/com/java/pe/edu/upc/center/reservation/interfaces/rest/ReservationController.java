@@ -6,6 +6,7 @@ import com.java.pe.edu.upc.center.reservation.domain.model.queries.GetReservatio
 import com.java.pe.edu.upc.center.reservation.domain.model.queries.GetReservationByTutorQuery;
 import com.java.pe.edu.upc.center.reservation.domain.services.ReservationCommandService;
 import com.java.pe.edu.upc.center.reservation.domain.services.ReservationQueryService;
+import com.java.pe.edu.upc.center.reservation.infrastructure.external.googlecalendar.GoogleCalendarService;
 import com.java.pe.edu.upc.center.reservation.interfaces.rest.resources.CreateReservationResource;
 import com.java.pe.edu.upc.center.reservation.interfaces.rest.resources.ReservationResource;
 import com.java.pe.edu.upc.center.reservation.interfaces.rest.transform.CreateReservationCommandFromResourceAssembler;
@@ -25,17 +26,20 @@ import java.util.List;
 public class ReservationController {
     private final ReservationCommandService reservationCommandService;
     private final ReservationQueryService reservationQueryService;
+    private final GoogleCalendarService calendarService;
 
-    public ReservationController(ReservationCommandService reservationCommandService, ReservationQueryService reservationQueryService) {
+    public ReservationController(ReservationCommandService reservationCommandService, ReservationQueryService reservationQueryService, GoogleCalendarService calendarService) {
         this.reservationCommandService = reservationCommandService;
         this.reservationQueryService = reservationQueryService;
+        this.calendarService = calendarService;
     }
 
     @PostMapping
-    public ResponseEntity<ReservationResource> createReservation(@RequestBody CreateReservationResource resource) {
+    public ResponseEntity<ReservationResource> createReservation(@RequestBody CreateReservationResource resource) throws Exception {
         var createReservationCommand = CreateReservationCommandFromResourceAssembler.toCommandFromResource(resource);
 
         Reservation reservation = reservationCommandService.handle(createReservationCommand);
+        calendarService.addEventToCalendar(resource.startTime(), resource.endTime());
 
         return new ResponseEntity<>(ReservationResourceFromEntityAssembler.toResourceFromEntity(reservation), HttpStatus.CREATED);
     }

@@ -9,7 +9,6 @@ public class CreateReservationCommandFromResourceAssembler {
         return new CreateReservationCommand(
                 resource.caregiverId(),
                 resource.tutorId(),
-                resource.date(),
                 resource.startTime(),
                 resource.endTime(),
                 resource.totalAmount()

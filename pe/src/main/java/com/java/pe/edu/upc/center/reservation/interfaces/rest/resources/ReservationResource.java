@@ -6,9 +6,8 @@ public record ReservationResource(
         Long id,
         Long caregiverId,
         Long tutorId,
-        LocalDateTime date,
-        String startTime,
-        String endTime,
+        LocalDateTime startTime,
+        LocalDateTime endTime,
         String status,
         double totalAmount
 ) {}

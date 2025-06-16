@@ -21,10 +21,10 @@ public class ReservationCommandServiceImpl implements ReservationCommandService 
     }
 
     public Reservation handle(CreateReservationCommand command) {
-        var isCaregiverExists = externalCaregiverService.checkCaregiverExists(command.caregiverId());
-        if (!isCaregiverExists) {
-            throw new UserNotFoundException(command.caregiverId());
-        }
+//        var isCaregiverExists = externalCaregiverService.checkCaregiverExists(command.caregiverId());
+//        if (!isCaregiverExists) {
+//            throw new UserNotFoundException(command.caregiverId());
+//        }
         Reservation reservation = new Reservation(command);
         return reservationRepository.save(reservation);
     }

@@ -12,7 +12,6 @@ public class ReservationResourceFromEntityAssembler {
                 entity.getId(),
                 entity.getCaregiverId(),
                 entity.getTutorId(),
-                entity.getDate(),
                 entity.getStartTime(),
                 entity.getEndTime(),
                 entity.getStatus().name(),

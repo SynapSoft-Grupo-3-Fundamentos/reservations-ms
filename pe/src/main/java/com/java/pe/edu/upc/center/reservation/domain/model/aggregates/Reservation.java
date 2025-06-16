@@ -23,13 +23,10 @@ public class Reservation extends AuditableAbstractAggregateRoot<Reservation> {
     private Long tutorId;
 
     @Column(nullable = false)
-    private LocalDateTime date;
+    private LocalDateTime startTime;
 
     @Column(nullable = false)
-    private String startTime;
-
-    @Column(nullable = false)
-    private String endTime;
+    private LocalDateTime endTime;
 
     @Column(nullable = false)
     private double totalAmount;
@@ -41,7 +38,6 @@ public class Reservation extends AuditableAbstractAggregateRoot<Reservation> {
     public Reservation(CreateReservationCommand command) {
         this.caregiverId = command.caregiverId();
         this.tutorId = command.tutorId();
-        this.date = command.date();
         this.startTime = command.startTime();
         this.endTime = command.endTime();
         this.totalAmount = command.totalAmount();
