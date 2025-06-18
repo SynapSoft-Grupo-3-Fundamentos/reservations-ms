@@ -1,0 +1,36 @@
+name:
+  reservation-service
+services:
+    reservation-microservice:
+      image: reservation-microservice
+      build:
+        context: .
+        dockerfile: Dockerfile
+      container_name: reservation-microservice
+      ports:
+        - "8097:8097"
+      networks:
+        - app-network
+      depends_on:
+        - reservation-db
+      restart:
+        always
+    reservation-db:
+      image: postgres:latest
+      container_name: reservation-db
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: admin123
+        POSTGRES_DB: reservation-db
+      ports:
+        - "5432:5432"
+      restart:
+        always
+      networks:
+        - app-network
+networks:
+    app-network:
+       external: true
+
+
+
