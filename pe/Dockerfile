@@ -1,12 +1,12 @@
 FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
-COPY . .
+COPY .   /app
+EXPOSE 8097
 RUN chmod +x mvnw
-RUN ./gradlew clean build -x test
+RUN ./mvnw clean package -DskipTests
 
-
-FROM eclipe-temurin:21-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8097
 ENTRYPOINT ["java", "-jar", "app.jar"]
